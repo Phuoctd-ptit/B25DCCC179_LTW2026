@@ -1,7 +1,7 @@
 const BUILD_TAG = "tm-6852";
-
+/* eslint-disable import/first */
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -16,7 +16,9 @@ const App = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [playerName, setPlayerName] = useState(''); // lifting state up
 
+  // Mounting: gọi API lấy câu hỏi
   useEffect(() => {
     const controller = new AbortController();
 
@@ -27,7 +29,7 @@ const App = () => {
         setLoading(false);
       })
       .catch((err) => {
-        if (axios.isCancel(err)) return; // request bị hủy thì bỏ qua
+        if (axios.isCancel(err)) return;
         setError(true);
         setLoading(false);
       });
@@ -41,8 +43,20 @@ const App = () => {
         path="/"
         element={<Layout loading={loading} error={error} buildTag={BUILD_TAG} />}
       >
-        <Route index element={<Home />} />
-        <Route path="play" element={<Play />} />
+        <Route
+          index
+          element={<Home playerName={playerName} setPlayerName={setPlayerName} />}
+        />
+        <Route
+          path="play"
+          element={
+            playerName.trim() ? (
+              <Play questions={questions} playerName={playerName.trim()} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
         <Route path="result" element={<Result />} />
         <Route path="history" element={<History />} />
         <Route path="questions" element={<QuestionBank questions={questions} />} />
