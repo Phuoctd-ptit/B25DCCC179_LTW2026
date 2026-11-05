@@ -1,9 +1,10 @@
 import { POINTS, LEVELS, LETTERS, formatScore } from '../data';
 import AnswerButton from './AnswerButton';
 
-const QuestionCard = ({ question, number, total, status, selected, onChoose }) => {
+const QuestionCard = ({ question, number, total, status, selected, hidden, onChoose }) => {
   // Quyết định màu của từng đáp án
   const getState = (i) => {
+    if (hidden.includes(i)) return 'hidden';
     if (status === 'locked') {
       return i === selected ? 'chosen' : 'normal';
     }

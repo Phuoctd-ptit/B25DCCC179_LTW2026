@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { formatScore } from '../data';
 
-const Home = ({ playerName, setPlayerName }) => {
+const Home = ({ playerName, setPlayerName, best }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -11,6 +12,12 @@ const Home = ({ playerName, setPlayerName }) => {
   return (
     <div>
       <h1>Thử thách 3 mạng</h1>
+
+      {best && (
+        <p className="record">
+          Kỷ lục: {formatScore(best.score)} – {best.name}
+        </p>
+      )}
 
       <ul>
         <li>Có 15 câu hỏi, 3 mạng và 90 giây cho cả lượt chơi.</li>

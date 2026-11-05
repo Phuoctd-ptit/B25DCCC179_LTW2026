@@ -53,3 +53,8 @@ form { margin-top: 16px; }
 
 /* ===== Kết quả ===== */
 .result-box { background: #fff; padding: 20px; border-radius: 8px; }
+
+/* ===== Bài 3: Trợ giúp, kỷ lục ===== */
+.helpers { display: flex; gap: 10px; margin-top: 16px; }
+.answer-btn.hidden { visibility: hidden; }
+.record { color: #6c3fc5; font-weight: bold; }
